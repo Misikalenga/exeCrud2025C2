@@ -13,8 +13,7 @@ Le tout dans une structure de type `MVC` 'maison', pour bien comprendre les prin
 
 ## Rappel du système MVC
 
-![MVC](data/mvc.png)
-
+![MVC](data/MVC.png)
 
 
 ### Objectifs
