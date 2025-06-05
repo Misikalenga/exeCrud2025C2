@@ -93,5 +93,6 @@ Voici ce que l'administration devra faire:
 
 Exemple sans le design:
 
-![admin](data/admin.png)
+![admin](data/admin.PNG)
+
 
