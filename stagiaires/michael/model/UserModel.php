@@ -10,6 +10,7 @@ function connectUser(PDO $con, string $userLogin, string $userPwd): bool
         // on a récupéré personne
         if($request->rowCount()===0) return false;
         // on a donc UN utilisateur (champ unique),
+        // transformation en tableau associatif
         $result = $request->fetch();
         // bonne pratique
         $request->closeCursor();

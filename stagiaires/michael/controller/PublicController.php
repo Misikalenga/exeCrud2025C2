@@ -12,6 +12,10 @@ if(isset($_GET['pg'])){
 
         // appel de la vue
         require_once "../view/login.html.php";
+    }elseif($_GET['pg']==="about"){
+
+        // appel de la vue
+        require_once "../view/about.html.php";
     }
 }else {
     //chargement des articles pour l'accueil

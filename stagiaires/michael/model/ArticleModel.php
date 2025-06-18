@@ -3,9 +3,9 @@
 
 function getArticlesPublished(PDO $connect): array
 {
-    // requête préparée
+    // requête préparée (non obligatoire, car pas d'entrée utilisateur)
     $request = $connect->prepare("
-    SELECT a.`idarticle`, a.`title`, a.`slug`, LEFT(a.`articletext`,300) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
+    SELECT a.`idarticle`, a.`title`, a.`slug`, SUBSTRING(a.`articletext`,1,300) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
     FROM `article` a 
         INNER JOIN `user` u 
             ON a.`user_iduser`= u.`iduser`
