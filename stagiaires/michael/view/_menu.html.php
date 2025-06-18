@@ -6,12 +6,23 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Ouvrir le menu">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <?php
+// par défaut, on peut appliquer une valeur à plusieurs variables
+$activeHome = $activeAbout = $activeLogin = "";
+        if(!isset($_GET['pg'])){
+            $activeHome = "active";
+        }elseif($_GET['pg']==="about"){
+            $activeAbout = "active";
+        }elseif($_GET['pg']==="login"){
+            $activeLogin = "active";
+        }
+        ?>
         <div class="collapse navbar-collapse" id="mainNavbar">
             <div class="navbar-nav ms-auto">
                 <!-- Correction : usage cohérent de ?pg=... -->
-                <a class="nav-link" href="./">Accueil</a>
-                <a class="nav-link" href="./?pg=about">À propos</a>
-                <a class="nav-link" href="./?pg=login">Connexion</a>
+                <a class="nav-link <?=$activeHome?>" href="./">Accueil</a>
+                <a class="nav-link <?=$activeAbout?>" href="./?pg=about">À propos</a>
+                <a class="nav-link <?=$activeLogin?>" href="./?pg=login">Connexion</a>
             </div>
         </div>
     </div>

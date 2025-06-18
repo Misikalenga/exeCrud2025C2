@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `iduser` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `login` varchar(60) NOT NULL COMMENT 'pour se connecter',
   `username` varchar(120) NOT NULL COMMENT 'nom d''affichage',
-  `userpwd` varchar(300) NOT NULL COMMENT 'mot de passe hashé avec password_hash',
+  `userpwd` varchar(300) NOT NULL COMMENT 'mot de passe haché avec password_hash',
   `usermail` varchar(150) NOT NULL COMMENT 'email pour confirmer l''inscription, envoyer des info etc...',
   `uniqid` varchar(255) NOT NULL COMMENT 'Identifiant unique créé avec uniqid(''mvc'', true); pour les liens dans les mails',
   `active` tinyint(3) UNSIGNED DEFAULT 1 COMMENT '0 -> inactif\n1 -> actif\n2 -> banni\n3 -> en attente de validation du mail',

@@ -3,6 +3,10 @@
 
 function connectUser(PDO $con, string $userLogin, string $userPwd): bool
 {
+    // on va protéger des espaces au début et à la fin
+    // des variables de connexions (copier/coller).
+    $userLogin = trim($userLogin);
+    $userPwd = trim($userPwd);
     // requête préparée que sur le login (champ unique)
     $request = $con->prepare("SELECT * FROM `user` WHERE `login`= ?");
     try{

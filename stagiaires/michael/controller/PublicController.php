@@ -7,7 +7,12 @@ if(isset($_GET['pg'])){
     if($_GET['pg']==="login"){
         // ici tentative de connexion
         if(isset($_POST['login']) && isset($_POST['userpwd'])){
-
+            // si c'est le bon utilisateur
+            if(connectUser($db,$_POST['login'],$_POST['userpwd'])){
+                echo "ok";
+            }else{
+                echo "ko";
+            }
         }
 
         // appel de la vue
