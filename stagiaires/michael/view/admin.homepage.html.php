@@ -68,7 +68,7 @@ include "_menu.html.php";
                                     <a href="?pg=update&id=<?= $article['idarticle']?>" class="btn btn-warning btn-sm mb-1">Modifier</a>
                                 </td>
                         <td>
-                            <span onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?=addslashes($article['title'])?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="btn btn-danger btn-sm mb-1">Supprimer</span>
+                            <span onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= addslashes($article['title'])?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="btn btn-danger btn-sm mb-1">Supprimer</span>
                         </td>
                 <?php endforeach; ?>
                 </tbody>
