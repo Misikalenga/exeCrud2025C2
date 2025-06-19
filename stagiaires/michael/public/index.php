@@ -22,7 +22,9 @@ try{
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
 
+    // en cas d'erreur, instanciation d'Exception
 }catch(Exception $e){
+    // mode production -> error_log($e->getMessage());
     die($e->getMessage());
 }
 
@@ -35,7 +37,7 @@ if(isset($_SESSION['login'])){
 }
 
 // Débogage
-echo '<hr><h3>Barre de débogage</h3><hr>';
+echo '<div class="bg-white p-4 rounded shadow-sm mb-5"<hr><h3>Barre de débogage</h3><hr>';
 echo '<h4>session_id() ou SID</h4>';
 var_dump(session_id());
 echo '<h4>$_GET</h4>';
@@ -44,7 +46,7 @@ echo '<h4>$_SESSION</h4>';
 var_dump($_SESSION);
 echo '<h3>$_POST</h3>';
 var_dump($_POST);
-//echo '</div></div>';
+echo '</div>';
 
 
 
