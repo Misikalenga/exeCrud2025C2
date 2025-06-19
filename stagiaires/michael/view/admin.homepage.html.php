@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MVC-CRUD-Procedural | Accueil du site</title>
+    <title>MVC-CRUD-Procedural | Accueil de l'administration</title>
     <link rel="icon" type="image/x-icon" href="img/logo.png"/>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/style.css" />
@@ -12,11 +12,11 @@
 <?php
 include "_menu.html.php";
 ?>
-<h1 class="mb-4 text-center">MVC-CRUD-Procedural | Accueil du site</h1>
+<h1 class="mb-4 text-center">MVC-CRUD-Procedural | Accueil de l'administration</h1>
 <div class="container">
     <div class="bg-white p-4 rounded shadow-sm mb-5">
-<p>Bienvenue sur notre site web !</p>
-        <h2 class="mb-1 text-center">Nos derniers articles</h2>
+<p>Bienvenue sur votre espace d'administration</p>
+        <h2 class="mb-1 text-center">Tous les articles</h2>
 
         <?php
         // pas d'articles publiés

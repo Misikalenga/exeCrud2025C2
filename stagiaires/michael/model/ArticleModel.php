@@ -1,6 +1,12 @@
 <?php
 # model/ArticleModel.php
 
+/**
+ * @param PDO $connect
+ * @return array
+ * Récupère les articles publiés sur la
+ * page d'accueil par date de publication descendante
+ */
 function getArticlesPublished(PDO $connect): array
 {
     // requête préparée (non obligatoire, car pas d'entrée utilisateur)

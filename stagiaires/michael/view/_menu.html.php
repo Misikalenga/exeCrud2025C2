@@ -8,13 +8,13 @@
         </button>
         <?php
 // par défaut, on peut appliquer une valeur à plusieurs variables
-$activeHome = $activeAbout = $activeLogin = "";
+$activeHome = $activeAbout = $activeLogin = $activeAdmin = "";
         if(!isset($_GET['pg'])){
             $activeHome = "active";
         }elseif($_GET['pg']==="about"){
             $activeAbout = "active";
-        }elseif($_GET['pg']==="logout"){
-
+        }elseif($_GET['pg']==="admin"){
+            $activeAdmin = "active";
         }
         ?>
         <div class="collapse navbar-collapse" id="mainNavbar">
@@ -27,6 +27,7 @@ $activeHome = $activeAbout = $activeLogin = "";
                 if(isset($_SESSION['login'])):
                 ?>
                     <span class="nav-link small"> | <?=$_SESSION['username']?></span>
+                    <a class="nav-link <?=$activeAdmin?>" href="./?pg=admin">Administration</a>
                     <a class="nav-link" href="./?pg=logout">Déconnexion</a>
 
                 <?php

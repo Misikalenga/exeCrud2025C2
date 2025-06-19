@@ -18,6 +18,11 @@ if(isset($_GET['pg'])){
 
         // appel de la vue
         require_once "../view/about.html.php";
+    }elseif($_GET['pg']==="admin"){
+        //chargement des articles pour l'accueil
+        $articles = getArticlesPublished($db);
+        // appel de la vue
+        require_once "../view/admin.homepage.html.php";
     }
 
 }else{

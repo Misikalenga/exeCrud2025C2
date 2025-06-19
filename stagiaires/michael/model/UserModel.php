@@ -1,6 +1,13 @@
 <?php
 # model/UserModel.php
 
+/**
+ * @param PDO $con
+ * @param string $userLogin
+ * @param string $userPwd
+ * @return bool
+ * Connexion de l'utilisateur
+ */
 function connectUser(PDO $con, string $userLogin, string $userPwd): bool
 {
     // on va protéger des espaces au début et à la fin
@@ -37,6 +44,10 @@ function connectUser(PDO $con, string $userLogin, string $userPwd): bool
     }
 }
 
+/**
+ * @return bool
+ * Déconnexion de l'utilisateur
+ */
 function disconnectUser(): bool
 {
     # suppression des variables de sessions
