@@ -13,8 +13,8 @@ $activeHome = $activeAbout = $activeLogin = "";
             $activeHome = "active";
         }elseif($_GET['pg']==="about"){
             $activeAbout = "active";
-        }elseif($_GET['pg']==="login"){
-            $activeLogin = "active";
+        }elseif($_GET['pg']==="logout"){
+
         }
         ?>
         <div class="collapse navbar-collapse" id="mainNavbar">
@@ -22,7 +22,21 @@ $activeHome = $activeAbout = $activeLogin = "";
                 <!-- Correction : usage cohérent de ?pg=... -->
                 <a class="nav-link <?=$activeHome?>" href="./">Accueil</a>
                 <a class="nav-link <?=$activeAbout?>" href="./?pg=about">À propos</a>
+                <?php
+                // si nous sommes connectés
+                if(isset($_SESSION['login'])):
+                ?>
+                    <span class="nav-link small"> | <?=$_SESSION['username']?></span>
+                    <a class="nav-link" href="./?pg=logout">Déconnexion</a>
+
+                <?php
+                // nous ne sommes pas connecté
+                else:
+                ?>
                 <a class="nav-link <?=$activeLogin?>" href="./?pg=login">Connexion</a>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
     </div>

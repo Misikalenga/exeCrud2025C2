@@ -37,12 +37,12 @@ function connectUser(PDO $con, string $userLogin, string $userPwd): bool
     }
 }
 
-function disconnectUser(): void
+function disconnectUser(): bool
 {
     # suppression des variables de sessions
     session_unset();
 
-    # suppression du cookie
+    # suppression du cookie côté browser / utilisateur
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000,
@@ -53,4 +53,7 @@ function disconnectUser(): void
 
     # Destruction du fichier lié sur le serveur
     session_destroy();
+
+    // envoi de true pour éviter un comportement asynchrone
+    return true;
 }
