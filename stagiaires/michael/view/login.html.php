@@ -20,7 +20,9 @@ include "_menu.html.php";
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="bg-white rounded shadow-sm p-4">
-                        <form action="" name="login" method="post">
+                        <div class="mt-3 <?=$displaySucces?>  alert alert-success" id="successMessage">Merci de vous être connecté !</div>
+                        <div class="mt-3 <?=$displayError?> alert alert-danger" id="errorMessage">Login et/ou mot de passe incorrecte !</div>
+                        <form class="<?=$displayForm?>" action="" name="login" method="post">
                             <div class="mb-3">
                                 <label for="login" class="form-label">Login</label>
                                 <input type="text" class="form-control" id="login" name="login" placeholder="Votre login" required autofocus>
@@ -31,6 +33,10 @@ include "_menu.html.php";
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Se connecter</button>
                         </form>
+                        <?php
+                        // si nous sommes connectés, nous activons une redirection javascript
+                        if(isset($jsRedirect)) echo $jsRedirect;
+                        ?>
                     </div>
                 </div>
             </div>
