@@ -56,3 +56,22 @@ function getAllArticles(PDO $connect): array
         die($e->getMessage());
     }
 }
+
+/**
+ * @param PDO $connect
+ * @param int $id
+ * @return bool
+ * Suppression d'un article via son id
+ */
+function deleteArticleById(PDO $connect, int $id): bool
+{
+    $sql = "DELETE FROM `article` WHERE `idarticle`=?";
+    $request = $connect->prepare($sql);
+    try{
+        $request->execute([$id]);
+        $request->closeCursor();
+        return true;
+    }catch(Exception $e){
+        die($e->getMessage());
+    }
+}

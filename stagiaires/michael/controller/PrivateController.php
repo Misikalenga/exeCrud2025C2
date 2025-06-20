@@ -28,10 +28,16 @@ if (isset($_GET['pg'])) {
     } elseif ($_GET['pg'] === "delete"
         && isset($_GET['id'])
         && ctype_digit($_GET['id'])) {
-        //chargement des articles pour l'administration
-        $articles = getAllArticles($db);
-        // appel de la vue
-        require_once "../view/admin.homepage.html.php";
+
+        // on convertit le string en int
+        // settype($_GET['id'],"integer");
+        $idarticle = (int) $_GET['id'];
+
+        //suppression d'un article
+        if(deleteArticleById($db,$idarticle)){
+            header("Location: ./?pg=admin");
+            exit();
+        }
     }
 
 } else {
