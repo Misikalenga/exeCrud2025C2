@@ -40,5 +40,6 @@ include "_menu.html.php";
                     </div>
                 </div>
             </div>
+        <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

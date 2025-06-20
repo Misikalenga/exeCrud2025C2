@@ -15,7 +15,7 @@ include "_menu.html.php";
 <h1 class="mb-4 text-center">MVC-CRUD-Procedural | Accueil de l'administration</h1>
 <div class="container">
     <div class="bg-white p-4 rounded shadow-sm mb-5">
-            <h4 class="mb-3 text-left mb-3">Ajouter un article</h4>
+        <h4 class="mb-3 text-left mb-3"><a href="?pg=addArticle">Ajouter un article</a></h4>
 <p>Bienvenue sur votre espace d'administration <?=$_SESSION['username']?></p><hr>
         <h3 class="mb-3 text-left mb-3">Gestion des articles</h3>
 
@@ -81,23 +81,23 @@ include "_menu.html.php";
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><?= htmlspecialchars($article['title']) ?></h5>
-                        <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($article['username']) ?> — <?= htmlspecialchars($article['articledatepublished']) ?></h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($article['username']) ?> — <?= $article['articledatepublished'] ?></h6>
                         <p class="card-text"><?= htmlspecialchars(mb_strimwidth($article['articletext'], 0, 100, '…')) ?></p>
                         <div class="mb-2">
                             <?= $article['articlepublished'] ? '<span class="badge bg-success">Publié</span>' : '<span class="badge bg-secondary">Non publié</span>' ?>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="?pg=admin&edit=<?= $article['idarticle'] ?>" class="btn btn-warning btn-sm flex-fill">Modifier</a>
-                            <form method="post" class="flex-fill" onsubmit="return confirm('Confirmer la suppression ?');">
-                                <input type="hidden" name="delete_article_id" value="<?= $article['idarticle'] ?>">
-                                <button type="submit" class="btn btn-danger btn-sm w-100">Supprimer</button>
-                            </form>
+                            <a href="?pg=admin&edit=<?= $article['idarticle'] ?>" class="badge bg-warning">Modifier</a>
                         </div>
-                    </div>
+                        <div class="d-flex gap-2">
+                        <a href="" onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= addslashes($article['title'])?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="badge bg-danger">Supprimer</a>
+                        </div>
+                        </div>
                 </div>
             <?php endforeach; ?>
         </div>
 
     </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -38,6 +38,9 @@ if (isset($_GET['pg'])) {
             header("Location: ./?pg=admin");
             exit();
         }
+    }elseif ($_GET['pg']==="addArticle"){
+
+        require_once "../view/admin.insert.html.php";
     }
 
 } else {

@@ -20,5 +20,6 @@ include "_menu.html.php";
 <p>Nous dépannons les web 1 quand ils ne comprennent pas quelque chose, d'ailleurs savent-ils vraiment coder ?</p>
     </div>
     </div>
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
