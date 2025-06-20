@@ -18,7 +18,16 @@ include "_menu.html.php";
             <h4 class="mb-3 text-left mb-3">Retour à l'administration</h4>
 <p>Bienvenue sur votre espace d'administration <?=$_SESSION['username']?></p><hr>
         <h3 class="mb-3 text-left mb-3">Fomulaire d'insertion</h3>
-
+        <?php
+        if(isset($merci)):
+        ?>
+        <h4 class="alert alert-success">Merci pour votre article !</h4>
+        <script>
+            setTimeout(function(){ window.location.href="./?pg=admin"; },3000);
+        </script>
+        <?php
+        endif;
+        ?>
             <div class="container">
                 <div class="bg-white p-4 rounded shadow-sm mb-5">
                     <h2 class="mb-3 text-center mb-5">Ajouter un article</h2>

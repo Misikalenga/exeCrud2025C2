@@ -42,7 +42,12 @@ if (isset($_GET['pg'])) {
     }elseif ($_GET['pg']==="addArticle"){
         // si les variables de type post attendues sont là
         if(isset($_POST['title'],$_POST['articletext'])){
-            addArticle($db,$_POST);
+            $insert = addArticle($db,$_POST);
+            if($insert===true){
+                $merci = true;
+            }else{
+                $probleme = true;
+            }
         }
         // appel de la vue
         require_once "../view/admin.insert.html.php";
