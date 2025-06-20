@@ -38,8 +38,13 @@ if (isset($_GET['pg'])) {
             header("Location: ./?pg=admin");
             exit();
         }
+    // on souhaite ajouter un article
     }elseif ($_GET['pg']==="addArticle"){
-
+        // si les variables de type post attendues sont là
+        if(isset($_POST['title'],$_POST['articletext'])){
+            addArticle($db,$_POST);
+        }
+        // appel de la vue
         require_once "../view/admin.insert.html.php";
     }
 

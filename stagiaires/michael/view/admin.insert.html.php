@@ -39,7 +39,9 @@ include "_menu.html.php";
                             <input type="checkbox" class="form-check-input" id="articlepublished" name="articlepublished" value="1">
                             <label class="form-check-label" for="articlepublished">Publier ?</label>
                         </div>
+                        <input type="hidden" name="iduser" value="<?=$_SESSION['iduser']?>">
                         <button type="submit" class="btn btn-primary">Envoyer</button>
+
                     </form>
                 </div>
             </div>

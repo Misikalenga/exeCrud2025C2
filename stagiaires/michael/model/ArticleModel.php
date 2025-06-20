@@ -75,3 +75,86 @@ function deleteArticleById(PDO $connect, int $id): bool
         die($e->getMessage());
     }
 }
+
+function addArticle(PDO $connect,array $datas): bool
+{
+    // on va vérifier si l'article est bien écrit par l'utilisateur
+    // connecté
+    if(!isset($datas['iduser']) || $datas['iduser'] != $_SESSION['iduser'])
+        return false;
+
+    $iduser = (int) $datas['iduser'];
+
+    // vérification du titre
+    $title = trim(strip_tags($datas['title']));
+    if(empty($title)) return false;
+
+    // création du slug
+    $slug = createSlug($title);
+
+    // encodage du titre
+    $title = htmlspecialchars($title);
+
+    if(strlen($title)>160 || strlen($slug)>165) return false;
+
+    // encodage du texte
+    $text = htmlspecialchars(trim(strip_tags($datas['articletext'])));
+    if(empty($text) || strlen($text)>65000) return false;
+
+    $sql = "INSERT INTO `article` (`title`, `slug`, `articletext`, `articlepublished`, `articledatepublished`, `user_iduser`) VALUES (:title, :slug, :text, :published, :date, :iduser);";
+
+    // si on a coché 'articlepublished'
+    if(isset($datas['articlepublished'])){
+        $isPublished = 1;
+        $datePublished = date("Y-m-d H:i:s");
+    }else{
+        $isPublished = 0;
+        $datePublished = null;
+    }
+
+    $prepare = $connect->prepare($sql);
+
+    try{
+        $prepare->execute([
+            "iduser"=>$iduser,
+            "slug"=>$slug,
+            "title"=>$title,
+            "text"=>$text,
+            "published"=>$isPublished,
+            "date"=> $datePublished,
+        ]);
+        $prepare->closeCursor();
+        return true;
+    }catch (Exception $e){
+        die($e->getMessage());
+    }
+
+}
+
+
+/**
+ * @param string $string
+ * @return string
+ * @throws \Random\RandomException
+ */
+function createSlug(string $string): string
+{
+    // Convertir en minuscules
+    $string = strtolower($string);
+
+    // Supprimer les accents
+    $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+
+    // Remplacer tout ce qui n'est pas alphanumérique par un tiret
+    $string = preg_replace('/[^a-z0-9]+/', '-', $string);
+
+    // Supprimer les tirets en début et fin de chaîne
+    $string = trim($string, '-');
+
+    // choisir au hasard 2 bytes (octets) et les transformer en
+    // hexadécimal
+    $hasard = bin2hex(random_bytes(2));
+
+    return $hasard."-".$string;
+}
+
