@@ -6,6 +6,7 @@
  * @return array
  * Récupère les articles publiés sur la
  * page d'accueil par date de publication descendante
+ * Pas d'affichage des articles plus tard que la date actuelle
  */
 function getArticlesPublished(PDO $connect): array
 {
@@ -15,7 +16,7 @@ function getArticlesPublished(PDO $connect): array
     FROM `article` a 
         INNER JOIN `user` u 
             ON a.`user_iduser`= u.`iduser`
-    WHERE a.`articlepublished`=1 
+    WHERE a.`articlepublished`=1 AND a.`articledatepublished` < current_timestamp()
     ORDER BY a.`articledatepublished` DESC ;
 ");
     try{

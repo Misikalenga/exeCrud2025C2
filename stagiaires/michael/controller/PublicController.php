@@ -37,5 +37,10 @@ if(isset($_GET['pg'])){
 }else {
     //chargement des articles pour l'accueil
     $articles = getArticlesPublished($db);
-    require_once "../view/homepage.html.php";
+    // si on veut récupérer les articles en json
+    if(isset($_GET['getjson'])){
+        echo json_encode($articles);
+    }else {
+        require_once "../view/homepage.html.php";
+    }
 }

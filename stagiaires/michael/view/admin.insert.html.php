@@ -15,9 +15,9 @@ include "_menu.html.php";
 <h1 class="mb-4 text-center">MVC-CRUD-Procedural | Administration | Nouvel article</h1>
 <div class="container">
     <div class="bg-white p-4 rounded shadow-sm mb-5">
-            <h4 class="mb-3 text-left mb-3">Retour à l'administration</h4>
+        <h4 class="mb-3 text-left mb-3"><a href="?pg=admin">Retour à l'administration</a></h4>
 <p>Bienvenue sur votre espace d'administration <?=$_SESSION['username']?></p><hr>
-        <h3 class="mb-3 text-left mb-3">Fomulaire d'insertion</h3>
+        <h3 class="mb-3 text-left mb-3">Formulaire d'insertion</h3>
         <?php
         if(isset($merci)):
         ?>
