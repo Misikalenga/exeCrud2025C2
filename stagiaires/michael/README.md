@@ -5,7 +5,7 @@
 Vous allez devoir créer votre premier `CRUD` complet sur une table :
 
 - **C**reate
-- **R**eade
+- **R**ead
 - **U**pdate
 - **D**elete
 

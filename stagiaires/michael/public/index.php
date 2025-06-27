@@ -36,7 +36,10 @@ if(isset($_SESSION['login'])){
     require_once "../controller/PublicController.php";
 }
 
-// Débogage
+// si nous sommes en mode dev
+if(APP_MODE == "dev"):
+
+// Affichage de la barre de débogage
 echo '<div class="bg-white p-4 rounded shadow-sm mb-5"<hr><h3>Barre de débogage</h3><hr>';
 echo '<h4>session_id() ou SID</h4>';
 var_dump(session_id());
@@ -48,6 +51,7 @@ echo '<h3>$_POST</h3>';
 var_dump($_POST);
 echo '</div>';
 
+endif;
 
 
 // bonne pratique
