@@ -2,11 +2,12 @@
 # model/UserModel.php
 
 /**
+ * Connexion de l'utilisateur
  * @param PDO $con
  * @param string $userLogin
  * @param string $userPwd
  * @return bool
- * Connexion de l'utilisateur
+ *
  */
 function connectUser(PDO $con, string $userLogin, string $userPwd): bool
 {

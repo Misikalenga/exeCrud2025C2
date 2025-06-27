@@ -32,8 +32,10 @@ include "_menu.html.php";
                 <div class="bg-white p-4 rounded shadow-sm mb-5">
                     <h2 class="mb-3 text-center mb-5">Ajouter un article</h2>
                     <!-- on affiche l'erreur -->
-                    <?php if (isset($error) && !empty($error)): ?>
-                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                    <?php if (isset($probleme)): ?>
+                        <div class="alert alert-danger">Erreur lors de l'insertion d'un article</div>
+                    <a href="javascript:history.go(-1);">Revenir sur l'article et le corriger</a>
+                    <hr>
                     <?php endif; ?>
                     <form action="" method="post" name="article">
                         <div class="mb-3">
