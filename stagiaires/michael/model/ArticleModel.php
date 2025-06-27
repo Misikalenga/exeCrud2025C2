@@ -1,81 +1,12 @@
 <?php
 # model/ArticleModel.php
-
-/**
- * @param PDO $connect
- * @return array
- * Récupère les articles publiés sur la
- * page d'accueil par date de publication descendante
- * Pas d'affichage des articles plus tard que la date actuelle
+/*
+ * CRUD
  */
-function getArticlesPublished(PDO $connect): array
-{
-    // requête préparée (non obligatoire, car pas d'entrée utilisateur)
-    $request = $connect->prepare("
-    SELECT a.`idarticle`, a.`title`, a.`slug`, SUBSTRING(a.`articletext`,1,300) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
-    FROM `article` a 
-        INNER JOIN `user` u 
-            ON a.`user_iduser`= u.`iduser`
-    WHERE a.`articlepublished`=1 AND a.`articledatepublished` < current_timestamp()
-    ORDER BY a.`articledatepublished` DESC ;
-");
-    try{
-        $request->execute();
-        $results = $request->fetchAll();
-        $request->closeCursor();
-        return $results;
-    }catch (Exception $e){
-        die($e->getMessage());
-    }
-}
 
-
-/**
- * @param PDO $connect
- * @return array
- * Récupère les articles pour l'administration
- * par publication ascendante et
- * date de publication descendante
+/*
+ * CREATE
  */
-function getAllArticles(PDO $connect): array
-{
-    // requête préparée (non obligatoire, car pas d'entrée utilisateur)
-    $request = $connect->prepare("
-    SELECT a.`idarticle`, a.`title`, a.`slug`, SUBSTRING(a.`articletext`,1,100) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
-    FROM `article` a 
-        INNER JOIN `user` u 
-            ON a.`user_iduser`= u.`iduser`
-    ORDER BY a.`articlepublished` ASC,
-             a.`articledatepublished` DESC ;
-");
-    try{
-        $request->execute();
-        $results = $request->fetchAll();
-        $request->closeCursor();
-        return $results;
-    }catch (Exception $e){
-        die($e->getMessage());
-    }
-}
-
-/**
- * @param PDO $connect
- * @param int $id
- * @return bool
- * Suppression d'un article via son id
- */
-function deleteArticleById(PDO $connect, int $id): bool
-{
-    $sql = "DELETE FROM `article` WHERE `idarticle`=?";
-    $request = $connect->prepare($sql);
-    try{
-        $request->execute([$id]);
-        $request->closeCursor();
-        return true;
-    }catch(Exception $e){
-        die($e->getMessage());
-    }
-}
 
 /**
  * Insertion d'un article en base de donnée
@@ -137,6 +68,125 @@ function addArticle(PDO $connect, array $datas): bool
         die($e->getMessage());
     }
 
+}
+
+/*
+ * READ
+ */
+
+/**
+ * @param PDO $connect
+ * @return array
+ * Récupère les articles publiés sur la
+ * page d'accueil par date de publication descendante
+ * Pas d'affichage des articles plus tard que la date actuelle
+ */
+function getArticlesPublished(PDO $connect): array
+{
+    // requête préparée (non obligatoire, car pas d'entrée utilisateur)
+    $request = $connect->prepare("
+    SELECT a.`idarticle`, a.`title`, a.`slug`, SUBSTRING(a.`articletext`,1,300) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
+    FROM `article` a 
+        INNER JOIN `user` u 
+            ON a.`user_iduser`= u.`iduser`
+    WHERE a.`articlepublished`=1 AND a.`articledatepublished` < current_timestamp()
+    ORDER BY a.`articledatepublished` DESC ;
+");
+    try{
+        $request->execute();
+        $results = $request->fetchAll();
+        $request->closeCursor();
+        return $results;
+    }catch (Exception $e){
+        die($e->getMessage());
+    }
+}
+
+
+/**
+ * @param PDO $connect
+ * @return array
+ * Récupère les articles pour l'administration
+ * par publication ascendante et
+ * date de publication descendante
+ */
+function getAllArticles(PDO $connect): array
+{
+    // requête préparée (non obligatoire, car pas d'entrée utilisateur)
+    $request = $connect->prepare("
+    SELECT a.`idarticle`, a.`title`, a.`slug`, SUBSTRING(a.`articletext`,1,100) AS `articletext`, a.`articlepublished`, a.`articledatepublished`, u.`login`, u.`username`
+    FROM `article` a 
+        INNER JOIN `user` u 
+            ON a.`user_iduser`= u.`iduser`
+    ORDER BY a.`articlepublished` ASC,
+             a.`articledatepublished` DESC ;
+");
+    try{
+        $request->execute();
+        $results = $request->fetchAll();
+        $request->closeCursor();
+        return $results;
+    }catch (Exception $e){
+        die($e->getMessage());
+    }
+}
+
+/**
+ * @param PDO $connect
+ * @param int $id
+ * @return array|bool
+ * On récupère un article via son ID pour la modification
+ */
+function getOneArticleById(PDO $connect, int $id): array|bool
+{
+    // requête préparée obligatoire, ca entrée utilisateur
+    $request = $connect->prepare("
+    SELECT a.`idarticle`, a.`title`, a.`slug`, a.`articletext`, a.`articlepublished`, a.`articledatepublished`, u.`iduser`, u.`login`, u.`username`
+    FROM `article` a 
+        INNER JOIN `user` u 
+            ON a.`user_iduser`= u.`iduser`
+    WHERE a.`idarticle` = ?
+");
+    try{
+        $request->execute([$id]);
+        // pas d'articles
+        if($request->rowCount()===0) return false;
+        $results = $request->fetch();
+        $request->closeCursor();
+        // 1 article au format FETCH_ASSOC
+        return $results;
+    }catch (Exception $e){
+        die($e->getMessage());
+    }
+}
+
+/*
+ * UPDATE
+ */
+
+// APRES LA PAUSE
+
+/*
+ * DELETE
+ */
+
+/**
+ * @param PDO $connect
+ * @param int $id
+ * @return bool
+ * Suppression d'un article via son id
+ */
+function deleteArticleById(PDO $connect, int $id): bool
+{
+    $sql = "DELETE FROM `article` WHERE `idarticle`=?";
+    $request = $connect->prepare($sql);
+    try{
+        $request->execute([$id]);
+        $request->closeCursor();
+        return true;
+    }catch(Exception $e){
+        die($e->getMessage());
+    }
 }
 
 
