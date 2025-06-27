@@ -113,7 +113,7 @@ function addArticle(PDO $connect, array $datas): bool
     // si on a coché 'articlepublished'
     if(isset($datas['articlepublished'])){
         $isPublished = 1;
-        $datePublished = date("Y-m-d H:i:s");
+        $datePublished = empty($datas['articledatepublished'])? date("Y-m-d H:i:s"): $datas['articledatepublished'];
     }else{
         $isPublished = 0;
         $datePublished = null;

@@ -50,6 +50,10 @@ include "_menu.html.php";
                             <input type="checkbox" class="form-check-input" id="articlepublished" name="articlepublished" value="1">
                             <label class="form-check-label" for="articlepublished">Publier ?</label>
                         </div>
+                        <div id="dateContainer" class="mb-3 d-none">
+                            <label class="form-label fw-semibold">Date et heure de publication :</label>
+                            <input type="datetime-local" name="articledatepublished" class="form-control">
+                        </div>
                         <input type="hidden" name="iduser" value="<?=$_SESSION['iduser']?>">
                         <button type="submit" class="btn btn-primary">Envoyer</button>
 
@@ -57,7 +61,13 @@ include "_menu.html.php";
                 </div>
             </div>
         </div>
-
+    <script>
+        // affichage du formulaire si on choisit publier.
+        document.getElementById('articlepublished').addEventListener('change', function () {
+            const dateContainer = document.getElementById('dateContainer');
+            dateContainer.classList.toggle('d-none', !this.checked);
+        });
+    </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
