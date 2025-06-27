@@ -19,14 +19,14 @@ function addArticle(PDO $connect, array $datas): bool
 {
     // on va vérifier si l'article est bien écrit par l'utilisateur
     // connecté
-    if(!isset($datas['iduser']) || $datas['iduser'] != $_SESSION['iduser'])
+    if (!isset($datas['iduser']) || $datas['iduser'] != $_SESSION['iduser'])
         return false;
 
-    $iduser = (int) $datas['iduser'];
+    $iduser = (int)$datas['iduser'];
 
     // vérification du titre
     $title = trim(strip_tags($datas['title']));
-    if(empty($title)) return false;
+    if (empty($title)) return false;
 
     // création du slug
     $slug = createSlug($title);
@@ -34,37 +34,37 @@ function addArticle(PDO $connect, array $datas): bool
     // encodage du titre
     $title = htmlspecialchars($title);
 
-    if(strlen($title)>160 || strlen($slug)>165) return false;
+    if (strlen($title) > 160 || strlen($slug) > 165) return false;
 
     // encodage du texte
     $text = htmlspecialchars(trim(strip_tags($datas['articletext'])));
-    if(empty($text) || strlen($text)>65000) return false;
+    if (empty($text) || strlen($text) > 65000) return false;
 
     $sql = "INSERT INTO `article` (`title`, `slug`, `articletext`, `articlepublished`, `articledatepublished`, `user_iduser`) VALUES (:title, :slug, :text, :published, :date, :iduser);";
 
     // si on a coché 'articlepublished'
-    if(isset($datas['articlepublished'])){
+    if (isset($datas['articlepublished'])) {
         $isPublished = 1;
-        $datePublished = empty($datas['articledatepublished'])? date("Y-m-d H:i:s"): $datas['articledatepublished'];
-    }else{
+        $datePublished = empty($datas['articledatepublished']) ? date("Y-m-d H:i:s") : $datas['articledatepublished'];
+    } else {
         $isPublished = 0;
         $datePublished = null;
     }
 
     $prepare = $connect->prepare($sql);
 
-    try{
+    try {
         $prepare->execute([
-            "iduser"=>$iduser,
-            "slug"=>$slug,
-            "title"=>$title,
-            "text"=>$text,
-            "published"=>$isPublished,
-            "date"=> $datePublished,
+            "iduser" => $iduser,
+            "slug" => $slug,
+            "title" => $title,
+            "text" => $text,
+            "published" => $isPublished,
+            "date" => $datePublished,
         ]);
         $prepare->closeCursor();
         return true;
-    }catch (Exception $e){
+    } catch (Exception $e) {
         die($e->getMessage());
     }
 
@@ -92,12 +92,12 @@ function getArticlesPublished(PDO $connect): array
     WHERE a.`articlepublished`=1 AND a.`articledatepublished` < current_timestamp()
     ORDER BY a.`articledatepublished` DESC ;
 ");
-    try{
+    try {
         $request->execute();
         $results = $request->fetchAll();
         $request->closeCursor();
         return $results;
-    }catch (Exception $e){
+    } catch (Exception $e) {
         die($e->getMessage());
     }
 }
@@ -121,12 +121,12 @@ function getAllArticles(PDO $connect): array
     ORDER BY a.`articlepublished` ASC,
              a.`articledatepublished` DESC ;
 ");
-    try{
+    try {
         $request->execute();
         $results = $request->fetchAll();
         $request->closeCursor();
         return $results;
-    }catch (Exception $e){
+    } catch (Exception $e) {
         die($e->getMessage());
     }
 }
@@ -147,15 +147,15 @@ function getOneArticleById(PDO $connect, int $id): array|bool
             ON a.`user_iduser`= u.`iduser`
     WHERE a.`idarticle` = ?
 ");
-    try{
+    try {
         $request->execute([$id]);
         // pas d'articles
-        if($request->rowCount()===0) return false;
+        if ($request->rowCount() === 0) return false;
         $results = $request->fetch();
         $request->closeCursor();
         // 1 article au format FETCH_ASSOC
         return $results;
-    }catch (Exception $e){
+    } catch (Exception $e) {
         die($e->getMessage());
     }
 }
@@ -164,7 +164,77 @@ function getOneArticleById(PDO $connect, int $id): array|bool
  * UPDATE
  */
 
-// APRES LA PAUSE
+function updateArticleById(PDO $connect, array $datas): bool
+{
+
+
+    // protection des variables
+    // vérification du titre
+    $title = htmlspecialchars(trim(strip_tags($datas['title'])));
+
+    if (empty($title) || strlen($title) > 160) return false;
+
+    // vérification du slug
+    $slug = htmlspecialchars(trim(strip_tags($datas['slug'])));
+
+    if (empty($slug) || strlen($slug) > 165) return false;
+
+
+    // encodage du texte
+    $text = htmlspecialchars(trim(strip_tags($datas['articletext'])));
+
+    if (empty($text) || strlen($text) > 65000) return false;
+
+    // si on a coché 'articlepublished'
+    if (isset($datas['articlepublished'])) {
+        $isPublished = 1;
+        $datePublished = empty($datas['articledatepublished']) ? date("Y-m-d H:i:s") : $datas['articledatepublished'];
+    } else {
+        $isPublished = 0;
+        $datePublished = null;
+    }
+
+    $iduser = (int) $datas['user_iduser'];
+
+    if(empty($iduser)) return false;
+
+    $idarticle = (int) $datas['idarticle'];
+
+    if(empty($idarticle)) return false;
+
+    $sql = "UPDATE `article` SET 
+                 `title` = ?,
+                 `slug` = ?,
+                 `articletext` = ?,
+                 `articlepublished`= ?,
+                 `articledatepublished`=?,
+                 `user_iduser`=?
+            WHERE `idarticle` = ?
+                     ";
+
+    $prepare = $connect->prepare($sql);
+
+    try{
+
+        $prepare->execute(
+            [
+                $title,
+                $slug,
+                $text,
+                $isPublished,
+                $datePublished,
+                $iduser,
+                $idarticle,
+            ]
+        );
+        $prepare->closeCursor();
+        return true;
+
+    }catch (Exception $e){
+        die($e->getMessage());
+    }
+
+}
 
 /*
  * DELETE
@@ -180,11 +250,11 @@ function deleteArticleById(PDO $connect, int $id): bool
 {
     $sql = "DELETE FROM `article` WHERE `idarticle`=?";
     $request = $connect->prepare($sql);
-    try{
+    try {
         $request->execute([$id]);
         $request->closeCursor();
         return true;
-    }catch(Exception $e){
+    } catch (Exception $e) {
         die($e->getMessage());
     }
 }
@@ -214,7 +284,7 @@ function createSlug(string $string): string
     // hexadécimal
     $hasard = bin2hex(random_bytes(2));
 
-    return $hasard."-".$string;
+    return $hasard . "-" . $string;
 }
 
 /**
@@ -228,7 +298,7 @@ function dateFR(string $datetime): string
     $stringtotime = strtotime($datetime);
 
     // Retour de la date au format
-    return date("d/m/Y \à H\hi",$stringtotime);
+    return date("d/m/Y \à H\hi", $stringtotime);
 }
 
 /**

@@ -32,12 +32,13 @@ include "_menu.html.php";
                 <div class="bg-white p-4 rounded shadow-sm mb-5">
                     <h2 class="mb-3 text-center mb-5">Modification de l'article</h2>
                     <!-- on affiche l'erreur -->
-                    <?php if (isset($probleme)): ?>
-                        <div class="alert alert-danger">Erreur lors de la modification d'un article</div>
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger"><?=$error?></div>
                     <a href="javascript:history.go(-1);">Revenir sur l'article et le corriger</a>
                     <hr>
                     <?php endif; ?>
-                    <form action="" method="post" name="article">
+                    <form class="<?=$displayForm?>" action="" method="post" name="article">
+                        <input type="hidden" name="idarticle" value="<?=$article['idarticle']?>">
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre</label>
                             <input type="text" class="form-control" id="title" name="title" maxlength="160" required placeholder="Titre de l'article" value="<?=$article['title']?>">

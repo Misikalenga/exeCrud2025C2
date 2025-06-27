@@ -58,6 +58,7 @@ if (isset($_GET['pg'])) {
         && isset($_GET['id'])
         && ctype_digit($_GET['id'])) {
 
+        $displayForm = ""; // le formulaire est affiché
         // on va convertir l'id en entier
         $idarticle = (int) $_GET['id'];
         $article = getOneArticleById($db, $idarticle);
@@ -65,14 +66,15 @@ if (isset($_GET['pg'])) {
         if($article===false) $error = "Cet article n'existe plus";
 
         // si les variables de type post attendues sont là
-       /* if (isset($_POST['title'], $_POST['articletext'])) {
-           $update = addArticle($db, $_POST);
+        if (isset($_POST['title'], $_POST['articletext'])) {
+           $update = updateArticleById($db, $_POST);
             if ($update === true) {
                 $merci = true;
+                $displayForm = "d-none"; // on cache le formulaire
             } else {
-                $error = true;
+                $error = "Erreur lors de la modification d'un article";
             }
-        } */
+        }
         // appel de la vue
         require_once "../view/admin.update.html.php";
     }
