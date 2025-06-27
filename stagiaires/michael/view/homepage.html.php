@@ -34,8 +34,8 @@ include "_menu.html.php";
         ?>
         <div class="article">
             <h2><a href="?pg=article&slug=<?php echo $article['slug']; ?>"><?php echo $article['title']; ?></a></h2>
-            <h3>Ecrit par <?php echo $article['username']; ?> le <?php echo $article['articledatepublished']; ?></h3>
-            <p><?php echo $article['articletext']; ?>... <a href="?pg=article&slug=<?php echo $article['slug']; ?>">Lire la suite</a></p>
+            <h3>Ecrit par <?php echo $article['username']; ?> le <?php echo dateFR($article['articledatepublished']); ?></h3>
+            <p><?php echo cutTheText($article['articletext']); ?> <a href="?pg=article&slug=<?php echo $article['slug']; ?>">Lire la suite</a></p>
 
         </div>
         <?php

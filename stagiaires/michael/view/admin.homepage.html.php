@@ -53,7 +53,7 @@ include "_menu.html.php";
                                 </td>
                                 <td>
 
-                                    <?= $article['articletext'] ?>
+                                    <?= cutTheText($article['articletext']) ?>
                                 </td>
                                 <td>
                                     <?= $article['username'] ?>
@@ -68,7 +68,7 @@ include "_menu.html.php";
                                     <a href="?pg=update&id=<?= $article['idarticle']?>" class="btn btn-warning btn-sm mb-1">Modifier</a>
                                 </td>
                         <td>
-                            <span onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= addslashes($article['title'])?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="btn btn-danger btn-sm mb-1">Supprimer</span>
+                            <span onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= $article['slug']?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="btn btn-danger btn-sm mb-1">Supprimer</span>
                         </td>
                 <?php endforeach; ?>
                 </tbody>
@@ -80,9 +80,9 @@ include "_menu.html.php";
             <?php foreach ($articles as $article): ?>
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($article['title']) ?></h5>
-                        <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($article['username']) ?> — <?= $article['articledatepublished'] ?></h6>
-                        <p class="card-text"><?= htmlspecialchars(mb_strimwidth($article['articletext'], 0, 100, '…')) ?></p>
+                        <h5 class="card-title"><?= $article['title'] ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?= $article['username'] ?> — <?= $article['articledatepublished'] ?></h6>
+                        <p class="card-text"><?=cutTheText($article['articletext'])?></p>
                         <div class="mb-2">
                             <?= $article['articlepublished'] ? '<span class="badge bg-success">Publié</span>' : '<span class="badge bg-secondary">Non publié</span>' ?>
                         </div>
@@ -90,7 +90,7 @@ include "_menu.html.php";
                             <a href="?pg=admin&edit=<?= $article['idarticle'] ?>" class="badge bg-warning">Modifier</a>
                         </div>
                         <div class="d-flex gap-2">
-                        <a href="" onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= addslashes($article['title'])?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="badge bg-danger">Supprimer</a>
+                        <a href="" onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= $article['slug']?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="badge bg-danger">Supprimer</a>
                         </div>
                         </div>
                 </div>

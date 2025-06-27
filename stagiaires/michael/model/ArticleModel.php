@@ -76,7 +76,14 @@ function deleteArticleById(PDO $connect, int $id): bool
     }
 }
 
-function addArticle(PDO $connect,array $datas): bool
+/**
+ * Insertion d'un article en base de donnée
+ * @param PDO $connect
+ * @param array $datas
+ * @return bool
+ * @throws \Random\RandomException
+ */
+function addArticle(PDO $connect, array $datas): bool
 {
     // on va vérifier si l'article est bien écrit par l'utilisateur
     // connecté
@@ -133,6 +140,7 @@ function addArticle(PDO $connect,array $datas): bool
 
 
 /**
+ * Création d'un slug unique à partir d'un titre
  * @param string $string
  * @return string
  * @throws \Random\RandomException
@@ -158,3 +166,31 @@ function createSlug(string $string): string
     return $hasard."-".$string;
 }
 
+/**
+ * Date en français
+ * @param string $datetime
+ * @return string
+ */
+function dateFR(string $datetime): string
+{
+    // Temps unix en seconde de la date venant de la db
+    $stringtotime = strtotime($datetime);
+
+    // Retour de la date au format
+    return date("d/m/Y \à H\hi",$stringtotime);
+}
+
+/**
+ * Evite de couper un texte au milieu
+ * d'un mot
+ * @param string $text
+ * @return string
+ *
+ */
+function cutTheText(string $text): string
+{
+    // on récupère la position du dernier espace dans le texte
+    $lastSpace = strripos($text, " ");
+    // on coupe le texte de 0 à la position de l'espace vide
+    return substr($text, 0, $lastSpace) . "...";
+}
