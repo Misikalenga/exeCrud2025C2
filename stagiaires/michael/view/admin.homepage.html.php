@@ -87,7 +87,7 @@ include "_menu.html.php";
                             <?= $article['articlepublished'] ? '<span class="badge bg-success">Publié</span>' : '<span class="badge bg-secondary">Non publié</span>' ?>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="?pg=admin&edit=<?= $article['idarticle'] ?>" class="badge bg-warning">Modifier</a>
+                            <a href="?pg=update&id=<?= $article['idarticle']?>" class="badge bg-warning">Modifier</a>
                         </div>
                         <div class="d-flex gap-2">
                         <a href="" onclick="confirm('Voulez-vous vraiment supprimer l\'article \n<?= $article['slug']?>')? document.location.href='?pg=delete&id=<?= $article['idarticle']?>': ''" class="badge bg-danger">Supprimer</a>
